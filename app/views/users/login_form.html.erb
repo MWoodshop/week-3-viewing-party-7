@@ -1,0 +1,8 @@
+<h2>Login</h2>
+<%= form_with model: @user, url: login_path, local: true do |form| %>
+  <%= form.label :email %>
+  <%= form.text_field :email, required: true %><br>
+  <%= form.label :password %>
+  <%= form.password_field :password %><br>
+  <%= form.submit "Log In" %>
+<% end %>

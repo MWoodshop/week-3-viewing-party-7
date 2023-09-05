@@ -33,3 +33,4 @@
 # Ignore SimpleCov
 /coverage
 .DS_Store
+s
