@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Landing Page' do
   before :each do
-    @user1 = User.create(name: 'User One', email: 'user1@test.com', password: 'password1', password_confirmation: 'password1')
-    @user2 = User.create(name: 'User Two', email: 'user2@test.com', password: 'password2', password_confirmation: 'password2')
+    @user1 = User.create(name: 'User One', email: 'user1@test.com', password: 'password1',
+                         password_confirmation: 'password1')
+    @user2 = User.create(name: 'User Two', email: 'user2@test.com', password: 'password2',
+                         password_confirmation: 'password2')
     visit '/'
   end
 
@@ -22,12 +24,33 @@ RSpec.describe 'Landing Page' do
     expect(current_path).to eq(root_path)
   end
 
-  it 'lists out existing users' do
-    expect(page).to have_content('Existing Users:')
+  # Task 3: User Story 1
+  # As a visitor
+  # When I visit the landing page
+  # I do not see the section of the page that lists existing users
 
-    within('.existing-users') do
-      expect(page).to have_content(@user1.email)
-      expect(page).to have_content(@user2.email)
-    end
+  it 'does show existing users when logged in' do
+    visit '/'
+    click_button 'Login'
+    fill_in :user_email, with: @user1.email
+    fill_in :user_password, with: @user1.password
+    click_button 'Log In'
+    click_link 'Home'
+
+    expect(page).to have_content(@user1.email)
+    expect(page).to have_content(@user2.email)
+  end
+
+  it 'does not show existing users when not logged in' do
+    visit '/'
+    click_button 'Login'
+    fill_in :user_email, with: @user1.email
+    fill_in :user_password, with: @user1.password
+    click_button 'Log In'
+    click_link 'Home'
+    click_button 'Logout'
+
+    expect(page).to_not have_content(@user1.email)
+    expect(page).to_not have_content(@user2.email)
   end
 end
