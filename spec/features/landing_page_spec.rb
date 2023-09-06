@@ -53,4 +53,24 @@ RSpec.describe 'Landing Page' do
     expect(page).to_not have_content(@user1.email)
     expect(page).to_not have_content(@user2.email)
   end
+
+  # Task 4: User Story #2
+  # As a registered user
+  # When I visit the landing page
+  # The list of existing users is no longer a link to their show pages
+  # But just a list of email addresses
+  it 'does not show existing users as links when logged in' do
+    visit '/'
+    click_button 'Login'
+    fill_in :user_email, with: @user1.email
+    fill_in :user_password, with: @user1.password
+    click_button 'Log In'
+    click_link 'Home'
+
+    expect(page).to have_content(@user1.email)
+    expect(page).to have_content(@user2.email)
+
+    expect(page).to_not have_link(@user1.email)
+    expect(page).to_not have_link(@user2.email)
+  end
 end
