@@ -1,12 +1,5 @@
 <% if session[:user_id].present? %>
-  <%= button_to "Logout", logout_path, method: :delete %>
+  <%= render 'logged_in' %>
 <% else %>
-  <%= button_to "Login", login_path, method: :get %>
-  <%= button_to "Create New User", register_path, method: :get %>
+  <%= render 'logged_out' %>
 <% end %>
-<section class='existing-users'>
-  <p>Existing Users: </p>
-  <% @users.each do |user| %>
-    <li><%= link_to user.email, user_path(user.id) %></li>
-  <% end %>
-</section>

@@ -1,0 +1,7 @@
+<%= button_to "Logout", logout_path, method: :delete %>
+<section class='existing-users'>
+  <p>Existing Users: </p>
+  <% @users.each do |user| %>
+    <li><%= user.email %></li>
+  <% end %>
+</section>
