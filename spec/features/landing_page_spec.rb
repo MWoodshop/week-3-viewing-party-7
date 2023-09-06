@@ -73,4 +73,24 @@ RSpec.describe 'Landing Page' do
     expect(page).to_not have_link(@user1.email)
     expect(page).to_not have_link(@user2.email)
   end
+
+  # Task 5: User Story #3
+  # As a visitor
+  # When I visit the landing page
+  # And then try to visit '/dashboard'
+  # I remain on the landing page
+  # And I see a message telling me that I must be logged in or registered to access my dashboard
+
+  it 'does not allow visitors to visit /dashboard if they are not logged in' do
+    visit '/'
+    click_button 'Login'
+    fill_in :user_email, with: @user1.email
+    fill_in :user_password, with: @user1.password
+    click_button 'Log In'
+    click_link 'Home'
+    click_button 'Logout'
+
+    visit dashboard_path
+    expect(page).to have_content('You must be logged in or registered to access your dashboard.')
+  end
 end

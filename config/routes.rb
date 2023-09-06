@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  # Landing Page
   root 'welcome#index'
+
+  # User Dashboard
+  get '/dashboard', to: 'users#show', as: :dashboard
 
   # User Registration
   get '/register', to: 'users#new'
